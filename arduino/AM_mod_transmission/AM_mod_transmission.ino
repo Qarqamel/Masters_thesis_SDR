@@ -1,5 +1,6 @@
 
 int sent_val = 0;
+int ctr = 0;
 
 // the setup function runs once when you press reset or power the board
 void setup() {

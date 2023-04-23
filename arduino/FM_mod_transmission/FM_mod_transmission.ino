@@ -1,5 +1,6 @@
 
 int sent_val = 0;
+int ctr = 0;
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -14,7 +15,7 @@ void setup() {
 // the loop function runs over and over again forever
 void loop() {
   int sent_val_prev = sent_val;
-  sent_val = random(2);
+  sent_val = (ctr++)%2; //random(2);
   digitalWrite(4, sent_val); // random data generation
   int read_val = digitalRead(5);
   Serial.print(sent_val_prev);
