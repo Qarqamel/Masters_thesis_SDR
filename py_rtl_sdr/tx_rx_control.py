@@ -31,7 +31,7 @@ TUNER_FREQUENCY     = 433920000
 # SAMPLING_FREQUENCY - choose SDR's sampling frequency
 # possible values:
 # 225001-300000 or 900001-3200000 sps
-SAMPLING_FREQUENCY  = 2048000
+SAMPLING_FREQUENCY  = 250000
 
 # GAIN - set SDR's gain (0 for auto)
 GAIN                = 0
@@ -72,9 +72,12 @@ angle = np.angle(samples_iq)
 # Create time vector
 t = np.linspace(0, sample_set_size/SAMPLING_FREQUENCY, sample_set_size)
 
-plt.plot(t, magnitude, '.')
+plt.plot(t, magnitude, '-', label='samples')
+plt.legend()
 plt.title('Samples')
 plt.xlabel('time [s]')
+#plt.axvline(x=0.00282, color='r', linestyle='--')
+#plt.xlim(0.0016, 0.0040) # 0.0024
 plt.grid()
 plt.show()
 
@@ -84,14 +87,14 @@ sig_spectrum = np.concatenate((sig_spectrum[int(sample_set_size/2):], sig_spectr
 sig_spectrum_abs = np.absolute(sig_spectrum)
 
 # Create frequencies vector
-freqs = np.linspace(TUNER_FREQUENCY - SAMPLING_FREQUENCY, TUNER_FREQUENCY + SAMPLING_FREQUENCY, sample_set_size-1)
+freqs = np.linspace(TUNER_FREQUENCY - SAMPLING_FREQUENCY/2, TUNER_FREQUENCY + SAMPLING_FREQUENCY/2, sample_set_size-1)
 
+plt.axvline(x=TUNER_FREQUENCY, color='r', linestyle='--')
 plt.plot(freqs, sig_spectrum_abs)
 plt.title('FFT')
 plt.xlabel('Frequency [Hz]')
 plt.grid()
-plt.ylim(0, 6000)
-plt.axvline(x=TUNER_FREQUENCY, color='r', linestyle='--')
+#plt.ylim(0, 8000)
 plt.show()
 
 
