@@ -33,8 +33,11 @@ TUNER_FREQUENCY     = 433920000
 # 225001-300000 or 900001-3200000 sps
 SAMPLING_FREQUENCY  = 2048000
 
+# GAIN - set SDR's gain (0 for auto)
+GAIN                = 0
+
 # SAMPLE_NR - number of samples to be captured by SDR
-SAMPLE_NR       = 50000
+SAMPLE_NR           = 50000
 
 # path to the file with sample data
 samples_filepath = r'..\samples\samples_freq_' + f'{TUNER_FREQUENCY/1e6}GHz_samp_{SAMPLING_FREQUENCY/1e3}kHz.dat'
@@ -51,7 +54,8 @@ if REGENERATE_SAMPLES:
         writeln(sr, SIGNAL_DATA)
 
     # reception with SDR, using rtl_sdr
-    os.system(r'..\..\rtl-sdr-64bit-20230409\rtl_sdr '+
+    os.system(r'..\..\rtl-sdr-64bit-20230409\rtl_sdr ' + 
+              f'-g {GAIN} ' +
               f'-f {TUNER_FREQUENCY} ' +
               f'-s {SAMPLING_FREQUENCY} ' + 
               f'-n {SAMPLE_NR} ' + 
@@ -86,7 +90,8 @@ plt.plot(freqs, sig_spectrum_abs)
 plt.title('FFT')
 plt.xlabel('Frequency [Hz]')
 plt.grid()
-plt.ylim(0, 5000)
+plt.ylim(0, 6000)
+plt.axvline(x=TUNER_FREQUENCY, color='r', linestyle='--')
 plt.show()
 
 
