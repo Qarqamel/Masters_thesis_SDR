@@ -23,10 +23,10 @@ REGENERATE_SAMPLES  = True
 SIGNAL_FREQUENCY    = 1000
 
 # SIGNAL_DATA - signal data to be transmitted. Must be a string of ones and zeros
-SIGNAL_DATA         = "0110100110"
+SIGNAL_DATA         = "01"
 
 # TUNER_FREQUENCY - choose SDR's tuner frequency
-TUNER_FREQUENCY     = 433920000
+TUNER_FREQUENCY     = 433877000
 
 # SAMPLING_FREQUENCY - choose SDR's sampling frequency
 # possible values:
@@ -34,10 +34,10 @@ TUNER_FREQUENCY     = 433920000
 SAMPLING_FREQUENCY  = 250000
 
 # GAIN - set SDR's gain (0 for auto)
-GAIN                = 0
+GAIN                = 1
 
 # SAMPLE_NR - number of samples to be captured by SDR
-SAMPLE_NR           = 50000
+SAMPLE_NR           = 10000
 
 # path to the file with sample data
 samples_filepath = r'..\samples\samples_freq_' + f'{TUNER_FREQUENCY/1e6}GHz_samp_{SAMPLING_FREQUENCY/1e3}kHz.dat'
@@ -54,7 +54,7 @@ if REGENERATE_SAMPLES:
         writeln(sr, SIGNAL_DATA)
 
     # reception with SDR, using rtl_sdr
-    os.system(r'..\..\rtl-sdr-64bit-20230409\rtl_sdr ' + 
+    os.system(r'..\rtl-sdr-64bit-20230409\rtl_sdr ' + 
               f'-g {GAIN} ' +
               f'-f {TUNER_FREQUENCY} ' +
               f'-s {SAMPLING_FREQUENCY} ' + 
@@ -72,12 +72,23 @@ angle = np.angle(samples_iq)
 # Create time vector
 t = np.linspace(0, sample_set_size/SAMPLING_FREQUENCY, sample_set_size)
 
+# Calculation of input signal
+input_sig = []
+samples_per_bit = int(SAMPLING_FREQUENCY/SIGNAL_FREQUENCY)
+sampled_bits_nr = int(SAMPLE_NR/samples_per_bit)
+for i in range(sampled_bits_nr):
+    input_sig += [SIGNAL_DATA[i%len(SIGNAL_DATA)]] * samples_per_bit
+plt.plot(t, input_sig)
+# plt.show()
+
+# Plotting magnitude of rcvd samples
 plt.plot(t, magnitude, '-', label='samples')
+plt.plot(t, magnitude, '.', label='samples')
 plt.legend()
 plt.title('Samples')
 plt.xlabel('time [s]')
-#plt.axvline(x=0.00282, color='r', linestyle='--')
-#plt.xlim(0.0016, 0.0040) # 0.0024
+# plt.axvline(x=0.0030, color='r', linestyle='--')
+# plt.xlim(0.00025, 0.0003) # 0.0024
 plt.grid()
 plt.show()
 
