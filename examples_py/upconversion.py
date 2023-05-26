@@ -13,12 +13,18 @@ upconverted_signal = low_freq_signal*high_freq_carrier
 sig_spectrum = np.fft.fft(upconverted_signal)
 sig_spectrum = sig_spectrum[0:len(sig_spectrum)//2]
 sig_spectrum_abs = np.absolute(sig_spectrum)
-comp_freq_1 = HIGH_FREQUENCY-LOW_FREQUENCY
-comp_freq_2 = HIGH_FREQUENCY+LOW_FREQUENCY
-comp_sine_1 = np.sin(2*PI*comp_freq_1*time)
-comp_sine_2 = np.sin(2*PI*comp_freq_2*time)
+comp_sine_1 =  np.cos(2*PI*(HIGH_FREQUENCY-LOW_FREQUENCY)*time)
+comp_sine_2 = -np.cos(2*PI*(HIGH_FREQUENCY+LOW_FREQUENCY)*time)
 comp_sum = comp_sine_1/2 + comp_sine_2/2
 # np.save('Upconverted_signal', upconverted_signal)
+
+plt.rc('font', size=8)
+plt.rc('axes', titlesize=8)
+plt.rc('axes', labelsize=8)
+plt.rc('xtick', labelsize=8)
+plt.rc('ytick', labelsize=8)
+plt.rc('legend', fontsize=8)
+plt.rc('figure', titlesize=8)
 
 plt.figure(figsize = [6.4,1], dpi=150, facecolor='#FAF4F6')
 ax = plt.axes()
