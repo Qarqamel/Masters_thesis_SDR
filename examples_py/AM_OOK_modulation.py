@@ -26,12 +26,20 @@ signals_to_plot = {'Payload':signal,
                    'Carrier':carrier,
                    'Tx':tx
                    }
-for name, sig in signals_to_plot.items():
-    plt.figure(figsize = [6.4,1], dpi=150, facecolor='#FAF4F6') #F4E8EB
-    ax = plt.axes()
-    ax.set_facecolor("#FAF4F6")
-    plt.grid()
-    plt.title(name)
-    plt.plot(time, sig, label = name)
-    plt.legend(loc = 'lower right', bbox_to_anchor=(1, -0.6))
-    plt.show()
+
+plt.figure(figsize = [6.4,1], dpi=150, facecolor='#FAF4F6') #F4E8EB
+ax = plt.axes()
+ax.set_facecolor("#FAF4F6")
+plt.grid()
+plt.plot(time, carrier, label = 'Carrier')
+plt.plot(time, signal, label = 'Payload')
+plt.legend(loc = 'center', ncol=2 , bbox_to_anchor=(0.5, 1.2))
+plt.show()
+
+plt.figure(figsize = [6.4,1], dpi=150, facecolor='#FAF4F6') #F4E8EB
+ax = plt.axes()
+ax.set_facecolor("#FAF4F6")
+plt.grid()
+plt.plot(time, tx, label = 'Tx')
+plt.legend(loc = 'center', ncol=2 , bbox_to_anchor=(0.5, 1.2))
+plt.show()
