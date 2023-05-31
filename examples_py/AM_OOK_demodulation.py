@@ -1,6 +1,7 @@
 import numpy as np
 import scipy.signal
 from matplotlib import pyplot as plt
+from auxiliary_lib import my_plot
 
 def lpf(samples, cutoff_freq, sampling_freq):
     b, a = scipy.signal.butter(2, 2*cutoff_freq/sampling_freq, btype='lowpass')
@@ -29,38 +30,15 @@ signals_to_plot = {
                    'Signal': signal
                    }
 
-plt.rc('font', size=8)
-plt.rc('axes', titlesize=8)
-plt.rc('axes', labelsize=8)
-plt.rc('xtick', labelsize=8)
-plt.rc('ytick', labelsize=8)
-plt.rc('legend', fontsize=8)
-plt.rc('figure', titlesize=8)
-
-plt.figure(figsize = [6.4,1], dpi=150, facecolor='#FAF4F6')
-ax = plt.axes()
-ax.set_facecolor("#FAF4F6")
-plt.grid()
-plt.plot(time, signals_to_plot['Rx'], linewidth = 2.5, label = 'Rx')
-plt.plot(time, signals_to_plot['Rectified'], linewidth = 1, label = 'Rectified')
-plt.legend(loc = 'center', ncol=2 , bbox_to_anchor=(0.5, 1.2))
+my_plot(time, {'Rx':rx, 'Rectified':rectified}, [2.5, 1], leg_ncol = 2)
 plt.show()
 
-plt.figure(figsize = [6.4,1], dpi=150, facecolor='#FAF4F6')
-ax = plt.axes()
-ax.set_facecolor("#FAF4F6")
-plt.grid()
-plt.plot(time, signals_to_plot['Rectified'], linewidth = 1.5, label = 'Rectified')
-plt.plot(time, signals_to_plot['Envelope'], linewidth = 1, label = 'Envelope')
-plt.legend(loc = 'center', ncol=2 , bbox_to_anchor=(0.5, 1.2))
+my_plot(time, {'Rectified':rectified, 'Envelope':envelope}, [1.5, 1], leg_ncol = 2)
 plt.show()
 
-plt.figure(figsize = [6.4,1], dpi=150, facecolor='#FAF4F6')
-ax = plt.axes()
-ax.set_facecolor("#FAF4F6")
-plt.grid()
-plt.plot(time, signals_to_plot['Envelope'], linewidth = 1.5, label = 'Envelope')
-plt.plot(time, signals_to_plot['Signal'], linewidth = 1, label = 'Signal')
-plt.axhline(y=ADC_THRESHOLD, color='r', linestyle='--', label = 'Threshold')
-plt.legend(loc = 'center', ncol=3 , bbox_to_anchor=(0.5, 1.2))
+treshold_line = [ADC_THRESHOLD]*TIME*SAMPLING_FREQUENCY
+my_plot(time, {'Envelope':envelope, 'Signal':signal, 'Threshold':treshold_line},
+              [1.5, 1, 1],
+              ['-', '-', 'r--'],
+              leg_ncol = 3)
 plt.show()
