@@ -19,7 +19,7 @@ def my_plot(x_vect, plots_dict, line_widths = [], styles = [], leg_ncol = 1, ste
     plt.grid()
     if stem:
         for name in plots_dict:
-            plt.stem(x_vect, plots_dict[name], label=name, basefmt = '')
+            plt.stem(x_vect, plots_dict[name], label=name, basefmt = ' ')
     else:
         for name, style, width in zip(plots_dict, styles, line_widths):
             plt.plot(x_vect, plots_dict[name], style, linewidth = width, label=name)
