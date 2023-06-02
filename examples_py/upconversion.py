@@ -19,38 +19,32 @@ comp_sine_2 = -np.cos(2*PI*(HIGH_FREQUENCY+LOW_FREQUENCY)*time)
 comp_sum = comp_sine_1/2 + comp_sine_2/2
 # np.save('Upconverted_signal', upconverted_signal)
 
+RES = 150
 
 my_plot(time, {f'carrier ({HIGH_FREQUENCY}Hz)':high_freq_carrier,
                f'signal ({LOW_FREQUENCY}Hz)':low_freq_signal},
-        leg_ncol = 2)
+        leg_ncol = 2, res = RES)
 
-
-my_plot(time, {'upconverted':upconverted_signal})
-
+my_plot(time, {'upconverted':upconverted_signal}, res = RES)
 
 freqs = np.linspace(0, NR_OF_SAMPLES/2, int(NR_OF_SAMPLES/2))
-
-my_plot(freqs, {'dft':sig_spectrum_abs}, stem = True)
+my_plot(freqs, {'dft':sig_spectrum_abs}, stem = True, res = RES)
 plt.xlabel('frequency')
 plt.ylim(0,3000)
 plt.xlim(0,HIGH_FREQUENCY+LOW_FREQUENCY+HIGH_FREQUENCY/2)
 plt.xticks(list(np.arange(0, HIGH_FREQUENCY+LOW_FREQUENCY+HIGH_FREQUENCY/2, 10))+[HIGH_FREQUENCY-LOW_FREQUENCY,HIGH_FREQUENCY+LOW_FREQUENCY])
 
-
-my_plot(freqs, {'dft':sig_spectrum_abs}, stem = True)
+my_plot(freqs, {'dft':sig_spectrum_abs}, stem = True, res = RES)
 plt.xlabel('frequency')
 plt.ylim(0,3000)
 plt.xlim(HIGH_FREQUENCY-2*LOW_FREQUENCY,HIGH_FREQUENCY+2*LOW_FREQUENCY)
 plt.xticks(np.arange(HIGH_FREQUENCY-2*LOW_FREQUENCY,HIGH_FREQUENCY+2*LOW_FREQUENCY, step=1))
 
-
 my_plot(time, {f'component 1 ({HIGH_FREQUENCY - LOW_FREQUENCY}Hz)':comp_sine_1,
                f'component 2 ({HIGH_FREQUENCY + LOW_FREQUENCY}Hz)':comp_sine_2},
-        leg_ncol = 2)
+        leg_ncol = 2, res = RES)
 plt.xlim(0, 0.5)
 
-
-
-my_plot(time, {'component sum':comp_sum})
+my_plot(time, {'component sum':comp_sum}, res = RES)
 plt.xlim(0, 0.5)
 

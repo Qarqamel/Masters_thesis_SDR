@@ -15,11 +15,13 @@ carrier = np.sin(2*PI*CARRIER_PERIODS_PER_BITS*time)
 tx = carrier*signal
 np.save('AM_OOK_TxSignal', tx)
 
+RES = 150
+
 signals_to_plot = {'Payload':signal,
                    'Carrier':carrier,
                    'Tx':tx
                    }
 
-my_plot(time, {'Carrier':carrier, 'Payload':signal}, leg_ncol = 2)
+my_plot(time, {'Carrier':carrier, 'Payload':signal}, leg_ncol = 2, res = RES)
 
-my_plot(time, {'Tx':tx})
+my_plot(time, {'Tx':tx}, res = RES)

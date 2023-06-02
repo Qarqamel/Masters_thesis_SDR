@@ -29,65 +29,54 @@ filt_sig_spectrum = np.fft.fft(filtered_signal)
 filt_sig_spectrum = filt_sig_spectrum[0:len(filt_sig_spectrum)//2]
 filt_sig_spectrum_abs = np.absolute(filt_sig_spectrum)
 
-
+RES = 150
 
 my_plot(time, {f'high_freq_signal ({HIGH_FREQUENCY}Hz)':high_freq_signal,
                f'if_freq ({IF_FREQUENCY}Hz)':if_freq_osc},
-        leg_ncol = 2)
+        leg_ncol = 2, res = RES)
 plt.xlim(0, 0.5)
 
-
-my_plot(time, {'downconverted':downconverted_signal})
+my_plot(time, {'downconverted':downconverted_signal}, res = RES)
 plt.xlim(0, 0.5)
-
 
 freqs = np.linspace(0, NR_OF_SAMPLES/2, int(NR_OF_SAMPLES/2))
-
-my_plot(freqs, {'dft':dwncnv_sig_spectrum_abs}, stem = True)
+my_plot(freqs, {'dft':dwncnv_sig_spectrum_abs}, stem = True, res = RES)
 plt.xlabel('frequency')
 plt.ylim(0,3000)
 plt.xlim(0, 2.5*HIGH_FREQUENCY)
 plt.xticks(np.arange(0,2.5*HIGH_FREQUENCY, step=10))
 
-
-my_plot(freqs, {'dft':dwncnv_sig_spectrum_abs}, stem = True)
+my_plot(freqs, {'dft':dwncnv_sig_spectrum_abs}, stem = True, res = RES)
 plt.xlabel('frequency')
 plt.ylim(0,3000)
 plt.xlim(0,2*(HIGH_FREQUENCY-IF_FREQUENCY))
 plt.xticks(np.arange(0,2*(HIGH_FREQUENCY-IF_FREQUENCY), step=2))
 
-
-my_plot(freqs, {'dft':dwncnv_sig_spectrum_abs}, stem = True)
+my_plot(freqs, {'dft':dwncnv_sig_spectrum_abs}, stem = True, res = RES)
 plt.xlabel('frequency')
 plt.ylim(0,3000)
 plt.xlim(2*IF_FREQUENCY,2*HIGH_FREQUENCY)
 plt.xticks(np.arange(2*IF_FREQUENCY,2*HIGH_FREQUENCY, step=2))
 
-
 my_plot(time, {f'component 1 ({HIGH_FREQUENCY-IF_FREQUENCY}Hz)':comp_sine_1,
                f'component 2 ({HIGH_FREQUENCY+IF_FREQUENCY}Hz)':comp_sine_2},
-        leg_ncol = 2)
+        leg_ncol = 2, res = RES)
 plt.xlim(0, 0.5)
 
-
-my_plot(time, {'component sum':component_sum})
+my_plot(time, {'component sum':component_sum}, res = RES)
 plt.xlim(0, 0.5)
 
-
-my_plot(time, {'filtered':filtered_signal})
+my_plot(time, {'filtered':filtered_signal}, res = RES)
 plt.xlim(0, 0.5)
 
-
-my_plot(freqs, {'dft':filt_sig_spectrum_abs}, stem = True)
+my_plot(freqs, {'dft':filt_sig_spectrum_abs}, stem = True, res = RES)
 plt.xlabel('frequency')
 plt.ylim(0,3000)
 plt.xlim(0, 2.5*HIGH_FREQUENCY)
 plt.xticks(np.arange(0,2.5*HIGH_FREQUENCY, step=10))
 
-
-my_plot(freqs, {'dft':filt_sig_spectrum_abs}, stem = True)
+my_plot(freqs, {'dft':filt_sig_spectrum_abs}, stem = True, res = RES)
 plt.xlabel('frequency')
 plt.ylim(0,3000)
 plt.xlim(0, 2*(HIGH_FREQUENCY-IF_FREQUENCY))
 plt.xticks(np.arange(0,2*(HIGH_FREQUENCY-IF_FREQUENCY), step=2))
-
