@@ -31,14 +31,11 @@ signals_to_plot = {
                    }
 
 my_plot(time, {'Rx':rx, 'Rectified':rectified}, [2.5, 1], leg_ncol = 2)
-plt.show()
 
 my_plot(time, {'Rectified':rectified, 'Envelope':envelope}, [1.5, 1], leg_ncol = 2)
-plt.show()
 
 treshold_line = [ADC_THRESHOLD]*TIME*SAMPLING_FREQUENCY
 my_plot(time, {'Envelope':envelope, 'Signal':signal, 'Threshold':treshold_line},
               [1.5, 1, 1],
               ['-', '-', 'r--'],
               leg_ncol = 3)
-plt.show()

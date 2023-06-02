@@ -21,7 +21,5 @@ signals_to_plot = {'Payload':signal,
                    }
 
 my_plot(time, {'Carrier':carrier, 'Payload':signal}, leg_ncol = 2)
-plt.show()
 
 my_plot(time, {'Tx':tx})
-plt.show()

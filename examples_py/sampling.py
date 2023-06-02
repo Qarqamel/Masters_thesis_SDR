@@ -1,32 +1,21 @@
 import numpy as np
 from numpy import pi as PI
 from matplotlib import pyplot as plt
+from auxiliary_lib import my_plot
 
-SIGNAL_FREQUENCY        = 20
-SAMPLING_FREQUENCY      = 10
+SIGNAL_FREQUENCY        = 3
+SAMPLING_FREQUENCY      = 4
 
-time_original = np.linspace(0, 1, 1000)
+time_original = np.linspace(0, 1, 10000)
 sinewave_original = np.sin(time_original*2*PI*SIGNAL_FREQUENCY)
-
-time = np.linspace(0, 1, SAMPLING_FREQUENCY)
+time = np.linspace(0, 1, SAMPLING_FREQUENCY+1)
 sinewave = np.sin(time*2*PI*SIGNAL_FREQUENCY)
 
-fig, axs = plt.subplots(3, dpi=150)
-fig.suptitle('Signal sampling', fontsize = 12)
-axs[-1].set_xlabel('time [s]')
+RES = 150
 
-axs[0].grid()
-axs[0].set_title(f'signal frequency = {SIGNAL_FREQUENCY}', fontsize = 8)
-axs[0].plot(time_original, sinewave_original, '-', label = 'Original signal')
+my_plot([time_original, time],
+        {f'signal frequency = {SIGNAL_FREQUENCY}':sinewave_original,
+         f'sampling frequency = {SAMPLING_FREQUENCY}':sinewave},
+        [1, 1.5],
+        ['-', '.'], leg_ncol=2, res = RES)
 
-axs[1].grid()
-axs[1].set_title(f'sampling frequency = {SAMPLING_FREQUENCY}', fontsize = 8)
-axs[1].plot(time, sinewave, '.', color = 'orange', label = 'Sampled signal')
-
-axs[2].grid()
-axs[2].plot(time_original, sinewave_original, '-')
-axs[2].plot(time, sinewave, '.', color = 'orange')
-
-fig.legend()
-fig.tight_layout()
-fig.show()

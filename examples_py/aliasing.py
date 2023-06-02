@@ -4,35 +4,24 @@ from matplotlib import pyplot as plt
 from numpy import pi as PI
 from auxiliary_lib import my_plot
 
-def lpf(samples, cutoff_freq, sampling_freq):
-    b, a = scipy.signal.butter(2, 2*cutoff_freq/sampling_freq, btype='lowpass')
-    return scipy.signal.filtfilt(b,a,samples)
-
-NR_OF_SAMPLES           = 7
-SIGNAL_FREQUENCY        = 2
+SAMPLING_FREQUENCY      = 9
+ALIAS_FREQUENCY         = 10
+PHASE                   = 0
 
 time = np.linspace(0, 1, int(10e4))
-sine = np.sin(time*2*PI*SIGNAL_FREQUENCY)
-sampling_freq = NR_OF_SAMPLES-1
-sine_al1 = np.sin(time*2*PI*(SIGNAL_FREQUENCY+sampling_freq))
-sine_al2 = np.sin(time*2*PI*(SIGNAL_FREQUENCY+2*sampling_freq))
-time_samp = np.linspace(0, 1, NR_OF_SAMPLES)
-sine_samp = np.sin(time_samp*2*PI*SIGNAL_FREQUENCY)
+signal = np.sin(time*2*PI*(ALIAS_FREQUENCY-SAMPLING_FREQUENCY) + PHASE)
+alias = np.sin(time*2*PI*ALIAS_FREQUENCY + PHASE)
+time_samples = np.linspace(0, 1, SAMPLING_FREQUENCY+1)
+sine_samples = np.sin(time_samples*2*PI*ALIAS_FREQUENCY+PHASE)
 
-my_plot(time, {f'signal ({SIGNAL_FREQUENCY}Hz)':sine,
-               f'alias ({SIGNAL_FREQUENCY+sampling_freq}Hz)':sine_al1,
-               f'alias ({SIGNAL_FREQUENCY+2*sampling_freq}Hz)':sine_al2},
-        [1.5,1,1], leg_ncol=3)
-plt.show()
+RES = 150
 
-my_plot(time_samp, {f'samples ({sampling_freq}Hz)':sine_samp}, styles=['.'])
-plt.show()
+my_plot([time, time, time_samples],
+        {f'signal ({ALIAS_FREQUENCY-SAMPLING_FREQUENCY}Hz)':signal,
+         f'alias ({ALIAS_FREQUENCY}Hz)':alias,
+         f'samples ({SAMPLING_FREQUENCY}Hz)':sine_samples},
+        [1, 1, 1],
+        ['-', '-', 'r.'],
+        leg_ncol=3,
+        res = RES)
 
-my_plot(time, {f'signal ({SIGNAL_FREQUENCY}Hz)':sine,
-               f'alias ({SIGNAL_FREQUENCY+sampling_freq}Hz)':sine_al1,
-               f'alias ({SIGNAL_FREQUENCY+2*sampling_freq}Hz)':sine_al2},
-        [2, 1, 1],
-        ['-', '--', '--'])
-plt.plot(time_samp, sine_samp, '.', label=f'samples ({sampling_freq}Hz)')
-plt.legend(loc = 'lower center', ncol=2, bbox_to_anchor=(0.5, 1))
-plt.show()
