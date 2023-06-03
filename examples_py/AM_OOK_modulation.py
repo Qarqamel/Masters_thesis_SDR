@@ -22,6 +22,6 @@ signals_to_plot = {'Payload':signal,
                    'Tx':tx
                    }
 
-my_plot(time, {'Carrier':carrier, 'Payload':signal}, leg_ncol = 2, res = RES)
+my_plot(time, {'Carrier':carrier, 'Payload':signal}, styles = ['C2', 'C0'], leg_ncol = 2, res = RES)
 
-my_plot(time, {'Tx':tx}, res = RES)
+my_plot(time, {'Tx':tx}, styles = ['C1'], res = RES)

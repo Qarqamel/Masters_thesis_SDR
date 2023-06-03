@@ -11,7 +11,7 @@ plt.rc('figure', titlesize=8)
 
 def my_plot(x_vect, plots_dict, line_widths = [], styles = [], leg_ncol = 1, stem = False, res = 150):
     if styles == []:
-        styles = ['-']*len(plots_dict)
+        styles = ['']*len(plots_dict)
     if line_widths == []:
         line_widths = [1.5]*len(plots_dict)
     plt.figure(figsize = [6.4,1], dpi=res, facecolor='#FAF4F6')
@@ -19,8 +19,8 @@ def my_plot(x_vect, plots_dict, line_widths = [], styles = [], leg_ncol = 1, ste
     ax.set_facecolor("#FAF4F6")
     plt.grid()
     if stem:
-        for name in plots_dict:
-            plt.stem(x_vect, plots_dict[name], label=name, basefmt = ' ')
+        for name, style in zip(plots_dict, styles):
+            plt.stem(x_vect, plots_dict[name], linefmt = style, markerfmt = style + 'o', label=name, basefmt = ' ')
     else:
         if isinstance(x_vect[0], Iterable):
             for x_axs, name, style, width in zip(x_vect, plots_dict, styles, line_widths):

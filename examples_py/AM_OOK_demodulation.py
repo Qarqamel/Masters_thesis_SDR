@@ -32,12 +32,12 @@ signals_to_plot = {
                    'Signal': signal
                    }
 
-my_plot(time, {'Rx':rx, 'Rectified':rectified}, [2.5, 1], leg_ncol = 2, res = RES)
+my_plot(time, {'Rx':rx, 'Rectified':rectified}, [2.5, 1], ['tab:blue', 'tab:olive'],leg_ncol = 2, res = RES)
 
-my_plot(time, {'Rectified':rectified, 'Envelope':envelope}, [1.5, 1], leg_ncol = 2, res = RES)
+my_plot(time, {'Rectified':rectified, 'Envelope':envelope}, [1.5, 1], ['tab:olive', 'tab:purple'], leg_ncol = 2, res = RES)
 
 treshold_line = [ADC_THRESHOLD]*TIME*SAMPLING_FREQUENCY
 my_plot(time, {'Envelope':envelope, 'Signal':signal, 'Threshold':treshold_line},
               [1.5, 1, 1],
-              ['-', '-', 'r--'],
+              ['tab:purple', 'tab:orange', 'r--'],
               leg_ncol = 3, res = RES)
