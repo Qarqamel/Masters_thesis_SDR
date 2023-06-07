@@ -4,8 +4,8 @@ from numpy import pi as PI
 from auxiliary_lib import my_plot
 
 NR_OF_SAMPLES   = 10000
-LOW_FREQUENCY   = 3
-HIGH_FREQUENCY  = 50
+LOW_FREQUENCY   = 1
+HIGH_FREQUENCY  = 11
 
 time = np.linspace(0, 1, NR_OF_SAMPLES)
 low_freq_signal     = np.sin(2*PI*LOW_FREQUENCY*time)
@@ -33,20 +33,20 @@ my_plot(freqs, {'dft':sig_spectrum_abs},  styles = ['C1'], stem = True, res = RE
 plt.xlabel('frequency')
 plt.ylim(0,3000)
 plt.xlim(0,HIGH_FREQUENCY+LOW_FREQUENCY+HIGH_FREQUENCY/2)
-plt.xticks(list(np.arange(0, HIGH_FREQUENCY+LOW_FREQUENCY+HIGH_FREQUENCY/2, 10))+[HIGH_FREQUENCY-LOW_FREQUENCY,HIGH_FREQUENCY+LOW_FREQUENCY])
+plt.xticks(list(np.arange(0, HIGH_FREQUENCY+LOW_FREQUENCY+HIGH_FREQUENCY/2, 2))+[HIGH_FREQUENCY-LOW_FREQUENCY,HIGH_FREQUENCY+LOW_FREQUENCY])
 
-my_plot(freqs, {'dft':sig_spectrum_abs},  styles = ['C1'], stem = True, res = RES)
-plt.xlabel('frequency')
-plt.ylim(0,3000)
-plt.xlim(HIGH_FREQUENCY-2*LOW_FREQUENCY,HIGH_FREQUENCY+2*LOW_FREQUENCY)
-plt.xticks(np.arange(HIGH_FREQUENCY-2*LOW_FREQUENCY,HIGH_FREQUENCY+2*LOW_FREQUENCY, step=1))
+# my_plot(freqs, {'dft':sig_spectrum_abs},  styles = ['C1'], stem = True, res = RES)
+# plt.xlabel('frequency')
+# plt.ylim(0,3000)
+# plt.xlim(HIGH_FREQUENCY-2*LOW_FREQUENCY,HIGH_FREQUENCY+2*LOW_FREQUENCY)
+# plt.xticks(np.arange(HIGH_FREQUENCY-2*LOW_FREQUENCY,HIGH_FREQUENCY+2*LOW_FREQUENCY, step=1))
 
 my_plot(time, {f'component 1 ({HIGH_FREQUENCY - LOW_FREQUENCY}Hz)':comp_sine_1,
                f'component 2 ({HIGH_FREQUENCY + LOW_FREQUENCY}Hz)':comp_sine_2},
-        styles = ['C2', 'C0'],
+        styles = ['C0', 'C2'],
         leg_ncol = 2, res = RES)
-plt.xlim(0, 0.5)
+# plt.xlim(0, 0.5)
 
 my_plot(time, {'component sum':comp_sum}, res = RES, styles = ['C1'])
-plt.xlim(0, 0.5)
+# plt.xlim(0, 0.5)
 

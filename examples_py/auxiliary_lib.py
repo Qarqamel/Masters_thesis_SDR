@@ -28,4 +28,7 @@ def my_plot(x_vect, plots_dict, line_widths = [], styles = [], leg_ncol = 1, ste
         else:
             for name, style, width in zip(plots_dict, styles, line_widths):
                 plt.plot(x_vect, plots_dict[name], style, linewidth = width, label=name)
-    plt.legend(loc = 'lower center', ncol=leg_ncol , bbox_to_anchor=(0.5, 1))
+    if (len(plots_dict)>1):
+        plt.legend(loc = 'lower center', ncol=leg_ncol , bbox_to_anchor=(0.5, 1))
+    else:
+        plt.title(list(plots_dict.keys())[0])
