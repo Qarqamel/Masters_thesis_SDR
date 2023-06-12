@@ -17,11 +17,11 @@ np.save('AM_OOK_TxSignal', tx)
 
 RES = 150
 
-signals_to_plot = {'Payload':signal,
-                   'Carrier':carrier,
-                   'Tx':tx
-                   }
-
 my_plot(time, {'Carrier':carrier, 'Payload':signal}, styles = ['C2', 'C0'], leg_ncol = 2, res = RES)
+plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
+plt.xlim(0,5)
 
 my_plot(time, {'Tx':tx}, styles = ['C1'], res = RES)
+plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
+plt.xlim(0,5)
+plt.xlabel('t')

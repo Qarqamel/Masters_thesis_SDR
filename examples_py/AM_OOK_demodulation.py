@@ -25,24 +25,22 @@ for sample in envelope:
 
 RES = 150
 
-signals_to_plot = {
-                   'Rx': rx,
-                   'Rectified': rectified,
-                   'Envelope': envelope,
-                   'Signal': signal
-                   }
-
 my_plot(time, {'Rx':rx, 'Rectified':rectified}, [2.5, 1], ['tab:blue', 'tab:olive'],leg_ncol = 2, res = RES)
+plt.xlim(0,5)
 plt.ylim(-1.1,1.1)
+plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
 
 my_plot(time, {'Rectified':rectified, 'Envelope':envelope}, [1.5, 1], ['tab:olive', 'tab:purple'], leg_ncol = 2, res = RES)
+plt.xlim(0,5)
 plt.ylim(-1.1,1.1)
-
+plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
 
 treshold_line = [ADC_THRESHOLD]*TIME*SAMPLING_FREQUENCY
 my_plot(time, {'Envelope':envelope, 'Signal':signal, 'Threshold':treshold_line},
               [1.5, 1, 1],
               ['tab:purple', 'tab:orange', 'r--'],
               leg_ncol = 3, res = RES)
+plt.xlim(0,5)
 plt.ylim(-1.1,1.1)
-
+plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
+plt.xlabel('t')

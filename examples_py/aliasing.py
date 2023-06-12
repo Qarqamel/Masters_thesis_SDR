@@ -19,6 +19,7 @@ samp_freq_list = [25, 22, 20, 20, 18, 15, 9]
 ph_list = [0,0,0,PI/6,0,0,0]
 
 RES = 150
+
 for freq, ph in zip(samp_freq_list, ph_list):
     time = np.linspace(0, 1, int(10e4))
     signal = np.sin(time*2*PI*SIGNAL_FREQUENCY + ph)
@@ -30,10 +31,11 @@ for freq, ph in zip(samp_freq_list, ph_list):
     my_plot([time, time, time_samples],
             {f'signal ({SIGNAL_FREQUENCY}Hz)':signal,
              f'alias ({abs(alias_frequency)}Hz)':alias,
-             f'samples ({freq}Hz)':sine_samples},
+             f'samples (fs = {freq}Hz)':sine_samples},
             [1.5, 0.5, 1],
             ['C0-', 'C1--', 'r.'],
             leg_ncol=3,
             res = RES)
     plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
-    plt.legend(loc = 'lower center', ncol=3 , bbox_to_anchor=(0.5, 0.9), framealpha=0.3, fontsize = 6)
+    plt.xlim(0,1)
+    plt.legend(loc = 'lower center', ncol=3 , bbox_to_anchor=(0.5, 0.9), framealpha=0, fontsize = 6)
