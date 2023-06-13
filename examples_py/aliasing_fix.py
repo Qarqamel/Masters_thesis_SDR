@@ -38,36 +38,34 @@ RES = 150
 DISP_SPECTRUM_SIZE = 70
 TIME_LIM = 0.6
 
-my_plot(time, {f'signal ({SIGNAL_FREQUENCY}Hz) + potential alias ({ALIAS_FREQUENCY}Hz)':sum_signal}, res=RES)
-plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
-plt.xlabel('t')
-plt.xlim(0, TIME_LIM)
-plt.xticks(list(np.arange(0, TIME_LIM, step=0.1)))
+# my_plot(time, {f'signal ({SIGNAL_FREQUENCY}Hz) + potential alias ({ALIAS_FREQUENCY}Hz)':sum_signal}, res=RES)
+# plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
+# plt.xlabel('t')
+# plt.xlim(0, TIME_LIM)
+# plt.xticks(list(np.arange(0, TIME_LIM, step=0.1)))
 
-freqs = np.linspace(0, 10e4/2, int(10e4/2))
-my_plot(freqs, {'':spectrum_sum_abs}, stem=True, res=RES)
-plt.xlabel('f')
-plt.ylim(0,60000)
-plt.xlim(0, DISP_SPECTRUM_SIZE)
-plt.xticks(list(np.arange(0,DISP_SPECTRUM_SIZE, step=10))+ [SIGNAL_FREQUENCY, ALIAS_FREQUENCY])
-plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
-plt.axvline(x = SAMPLING_FREQUENCY, color = 'r', label = 'sampling frequency', linestyle = '--', linewidth = 1)
-plt.legend(loc = 'lower center', ncol=1 , bbox_to_anchor=(0.5, 1), framealpha=0)
- 
 wrong_sig = np.sin(2*PI*SIGNAL_FREQUENCY*time) + np.sin(2*PI*abs(ALIAS_FREQUENCY-SAMPLING_FREQUENCY)*time)
 
-my_plot([time_samples, time, time], {f'signal + alias samples (fs = {SAMPLING_FREQUENCY}Hz)':sum_sig_samples,
-                               ' ':sum_signal,
-                               '':wrong_sig},
-        styles = ['C1.', 'C0--', 'C1--'],
+my_plot([time, time_samples, time], {f'signal ({SIGNAL_FREQUENCY}Hz) + potential alias ({ALIAS_FREQUENCY}Hz)':sum_signal,
+                                     f'samples (fs = {SAMPLING_FREQUENCY}Hz)':sum_sig_samples,
+                                     '':wrong_sig},
+        styles = ['C0', 'C1.', 'C1--'],
         line_widths = [1.5, 0.5, 0.5],
         res=RES, leg_ncol=3)
 plt.ylim(-2.2,2.2)
 plt.xlim(0, TIME_LIM)
 plt.xticks(list(np.arange(0, TIME_LIM, step=0.1)))
-plt.xticks(list(np.arange(0, TIME_LIM, step=0.1)))
 plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
 plt.xlabel('t')
+
+freqs = np.linspace(0, 10e4/2, int(10e4/2))
+my_plot(freqs, {'':spectrum_sum_abs}, stem=True, res=RES)
+plt.ylim(0,60000)
+plt.xlim(0, DISP_SPECTRUM_SIZE)
+plt.xticks(list(np.arange(0,DISP_SPECTRUM_SIZE, step=10))+ [SIGNAL_FREQUENCY, ALIAS_FREQUENCY, SAMPLING_FREQUENCY])
+plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
+plt.axvline(x = SAMPLING_FREQUENCY, color = 'r', label = 'sampling frequency', linestyle = '--', linewidth = 1)
+plt.legend(loc = 'lower center', ncol=1 , bbox_to_anchor=(0.5, 1), framealpha=0)
 
 spectrum_samp_abs = list(spectrum_samp_abs)+ [0]*(DISP_SPECTRUM_SIZE - len(spectrum_samp_abs))
 freqs = np.linspace(0, DISP_SPECTRUM_SIZE, DISP_SPECTRUM_SIZE)
@@ -75,35 +73,51 @@ my_plot(freqs, {'':spectrum_samp_abs}, styles = ['C1'], stem=True, res=RES)
 plt.xlabel('f')
 plt.ylim(0,30)
 plt.xlim(0, DISP_SPECTRUM_SIZE)
-plt.xticks(list(np.arange(0,DISP_SPECTRUM_SIZE, step=10))+ [SIGNAL_FREQUENCY, abs(ALIAS_FREQUENCY-SAMPLING_FREQUENCY)])
+plt.xticks(list(np.arange(0,DISP_SPECTRUM_SIZE, step=10))+ [SIGNAL_FREQUENCY, abs(ALIAS_FREQUENCY-SAMPLING_FREQUENCY), ALIAS_FREQUENCY, SAMPLING_FREQUENCY])
 plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
+plt.axvline(x = SAMPLING_FREQUENCY, color = 'r', label = '', linestyle = '--', linewidth = 1)
 
-my_plot(time, {f'signal ({SIGNAL_FREQUENCY}Hz) + potential alias ({ALIAS_FREQUENCY}Hz)':sum_signal}, res=RES)
+my_plot([time, time, time_samples],
+        {f'Signal ({SIGNAL_FREQUENCY}Hz) + alias ({ALIAS_FREQUENCY}Hz)':sum_signal,
+         'Fileterd signal':filt_sine,
+         f'Samples (fs = {SAMPLING_FREQUENCY}Hz)':sum_sig_filt_samples},
+        styles = ['C0', 'C2', 'C1.'],
+        res=RES,
+        leg_ncol=3)
 plt.xlim(0, TIME_LIM)
 plt.xticks(list(np.arange(0, TIME_LIM, step=0.1)))
 plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
 
-my_plot(time, {'Signal with alias fileterd out':filt_sine}, styles = ['C2'], res=RES)
-plt.xlim(0, TIME_LIM)
-plt.xticks(list(np.arange(0, TIME_LIM, step=0.1)))
-plt.ylim(-2.2,2.2)
-plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
-plt.xlabel('t')
+freqs = np.linspace(0, 10e4/2, int(10e4/2))
+my_plot(freqs, {'':spectrum_sum_abs}, stem=True, res=RES)
+plt.ylim(0,60000)
+plt.xlim(0, DISP_SPECTRUM_SIZE)
+plt.xticks(list(np.arange(0,DISP_SPECTRUM_SIZE, step=10))+ [SIGNAL_FREQUENCY, ALIAS_FREQUENCY, SAMPLING_FREQUENCY])
+plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
+plt.axvline(x = SAMPLING_FREQUENCY, color = 'r', label = 'sampling frequency', linestyle = '--', linewidth = 1)
+plt.legend(loc = 'lower center', ncol=1 , bbox_to_anchor=(0.5, 1), framealpha=0)
+
+# my_plot(time, {'Signal with alias fileterd out':filt_sine}, styles = ['C2'], res=RES)
+# plt.xlim(0, TIME_LIM)
+# plt.xticks(list(np.arange(0, TIME_LIM, step=0.1)))
+# plt.ylim(-2.2,2.2)
+# plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
+# plt.xlabel('t')
 
 freqs = np.linspace(0, 10e4/2, int(10e4/2))
 my_plot(freqs, {'':spectrum_filt_abs}, styles = ['C2'], stem=True, res=RES)
-plt.xlabel('f')
 plt.ylim(0,60000)
 plt.xlim(0, DISP_SPECTRUM_SIZE)
-plt.xticks(list(np.arange(0,DISP_SPECTRUM_SIZE, step=10))+[SIGNAL_FREQUENCY])
-plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
+plt.xticks(list(np.arange(0,DISP_SPECTRUM_SIZE, step=10))+ [SIGNAL_FREQUENCY, ALIAS_FREQUENCY, SAMPLING_FREQUENCY])
+plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
+plt.axvline(x = SAMPLING_FREQUENCY, color = 'r', label = '', linestyle = '--', linewidth = 1)
 
-my_plot(time_samples, {f'Filtered signal samples (fs = {SAMPLING_FREQUENCY}Hz)':sum_sig_filt_samples}, styles = ['C1.'], res=RES)
-plt.xlim(0, TIME_LIM)
-plt.xticks(list(np.arange(0, TIME_LIM, step=0.1)))
-plt.ylim(-2.2,2.2)
-plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
-plt.xlabel('t')
+# my_plot(time_samples, {f'Filtered signal samples (fs = {SAMPLING_FREQUENCY}Hz)':sum_sig_filt_samples}, styles = ['C1.'], res=RES)
+# plt.xlim(0, TIME_LIM)
+# plt.xticks(list(np.arange(0, TIME_LIM, step=0.1)))
+# plt.ylim(-2.2,2.2)
+# plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
+# plt.xlabel('t')
 
 spectrum_samp_filt_abs = list(spectrum_samp_filt_abs)+ [0]*(DISP_SPECTRUM_SIZE - len(spectrum_samp_filt_abs))
 freqs = np.linspace(0, DISP_SPECTRUM_SIZE, DISP_SPECTRUM_SIZE)
@@ -111,5 +125,6 @@ my_plot(freqs, {'':spectrum_samp_filt_abs}, styles = ['C1'], stem=True, res=RES)
 plt.xlabel('f')
 plt.ylim(0,30)
 plt.xlim(0, DISP_SPECTRUM_SIZE)
-plt.xticks(list(np.arange(0,DISP_SPECTRUM_SIZE, step=10))+[SIGNAL_FREQUENCY])
+plt.xticks(list(np.arange(0,DISP_SPECTRUM_SIZE, step=10))+[SIGNAL_FREQUENCY, ALIAS_FREQUENCY, SAMPLING_FREQUENCY])
 plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
+plt.axvline(x = SAMPLING_FREQUENCY, color = 'r', label = '', linestyle = '--', linewidth = 1)

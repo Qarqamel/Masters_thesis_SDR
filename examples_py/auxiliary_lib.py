@@ -10,12 +10,12 @@ plt.rc('ytick', labelsize=8)
 plt.rc('legend', fontsize=8)
 plt.rc('figure', titlesize=8)
 
-def my_plot(x_vect, plots_dict, line_widths = [], styles = [], leg_ncol = 1, stem = False, res = 150):
+def my_plot(x_vect, plots_dict, line_widths = [], styles = [], leg_ncol = 1, stem = False, res = 150, fig_height = 1):
     if styles == []:
         styles = ['']*len(plots_dict)
     if line_widths == []:
         line_widths = [1.5]*len(plots_dict)
-    plt.figure(figsize = [6.4,1], dpi=res, facecolor='#FAF4F6')
+    plt.figure(figsize = [6.4,fig_height], dpi=res, facecolor='#FAF4F6')
     ax = plt.axes()
     ax.set_facecolor("#FAF4F6")
     plt.grid()

@@ -4,8 +4,8 @@ from numpy import pi as PI
 from auxiliary_lib import my_plot
 
 NR_OF_SAMPLES           = 10000
-SIGNAL_FREQUENCY_1      = 10
-SIGNAL_FREQUENCY_2      = 12
+SIGNAL_FREQUENCY_1      = 9
+SIGNAL_FREQUENCY_2      = 11
 
 time = np.linspace(0, 1, NR_OF_SAMPLES)
 sig_1 = np.sin(time*2*PI*SIGNAL_FREQUENCY_1)
