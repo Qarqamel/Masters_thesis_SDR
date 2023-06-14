@@ -44,10 +44,20 @@ plt.tick_params(left = True, labelleft = True, bottom = True, labelbottom = True
 plt.xlim(0,1)
 plt.xlabel('t')
 
+signals_spectrums = []
+for sig in [high_freq_signal, if_freq_osc]:
+    spectrum = np.fft.fft(sig)
+    spectrum = spectrum[0:len(spectrum)//2]
+    spectrum_abs = np.absolute(spectrum)
+    signals_spectrums.append(spectrum_abs/2)
+
 freqs = np.linspace(0, NR_OF_SAMPLES/2, int(NR_OF_SAMPLES/2))
-my_plot(freqs, {'':dwncnv_sig_spectrum_abs}, stem = True, res = RES,  styles = ['C8'])
+my_plot(freqs, {'':dwncnv_sig_spectrum_abs,
+                ' ':signals_spectrums[0],
+                '  ':signals_spectrums[1]},
+        stem = True, res = RES,  styles = ['C8', 'C0', 'C2'])
 plt.xlabel('f')
-plt.ylim(0,3000)
+plt.ylim(200,3000)
 plt.xlim(0, DISP_SPECTRUM_SIZE)
 plt.xticks(list(np.arange(0, DISP_SPECTRUM_SIZE, 2))+[HIGH_FREQUENCY-IF_FREQUENCY,HIGH_FREQUENCY+IF_FREQUENCY])
 plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
@@ -69,10 +79,19 @@ plt.xlabel('t')
 freqs = np.linspace(0, NR_OF_SAMPLES/2, int(NR_OF_SAMPLES/2))
 my_plot(freqs, {'':dwncnv_sig_spectrum_abs}, stem = True, res = RES,  styles = ['C8'])
 plt.xlabel('f')
-plt.ylim(0,3000)
+plt.ylim(200,3000)
 plt.xlim(0, DISP_SPECTRUM_SIZE)
 plt.xticks(list(np.arange(0, DISP_SPECTRUM_SIZE, 2))+[HIGH_FREQUENCY-IF_FREQUENCY,HIGH_FREQUENCY+IF_FREQUENCY])
 plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
+
+fsamp = 10e2
+coef_b, coef_a = scipy.signal.butter(1, 2*FILTER_CUTOFF/fsamp, btype='lowpass')
+freqs, response = scipy.signal.freqz(coef_b, coef_a, fs=fsamp, include_nyquist=True)
+my_plot(freqs, {'Lowpass filter frequency response':response}, styles = ['C4'], res=RES)
+plt.xlim(0, DISP_SPECTRUM_SIZE)
+plt.xticks(list(np.arange(0,DISP_SPECTRUM_SIZE, step=10)) + [HIGH_FREQUENCY, IF_FREQUENCY, FILTER_CUTOFF])
+plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
+plt.xlabel('f')
 
 my_plot(time, {'filtered signal':filtered_signal}, res = RES,  styles = ['C1'])
 plt.ylim(-1.1,1.1)
@@ -80,9 +99,10 @@ plt.tick_params(left = True, labelleft = True, bottom = True, labelbottom = True
 plt.xlim(0,1)
 plt.xlabel('t')
 
+freqs = np.linspace(0, NR_OF_SAMPLES/2, int(NR_OF_SAMPLES/2))
 my_plot(freqs, {'':filt_sig_spectrum_abs}, stem = True, res = RES,  styles = ['C1'])
 plt.xlabel('f')
-plt.ylim(0,3000)
+plt.ylim(200,3000)
 plt.xlim(0, DISP_SPECTRUM_SIZE)
 plt.xticks(list(np.arange(0, DISP_SPECTRUM_SIZE, 2))+[HIGH_FREQUENCY-IF_FREQUENCY,HIGH_FREQUENCY+IF_FREQUENCY])
 plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)

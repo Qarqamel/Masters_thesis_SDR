@@ -6,7 +6,7 @@ from auxiliary_lib import my_plot
 
 
 def lpf(samples, cutoff_freq, sampling_freq):
-    b, a = scipy.signal.butter(2, 2*cutoff_freq/sampling_freq, btype='lowpass')
+    b, a = scipy.signal.butter(1, 2*cutoff_freq/sampling_freq, btype='lowpass')
     return scipy.signal.filtfilt(b,a,samples)
 
 LOW_FREQUENCY = 10
@@ -29,20 +29,9 @@ RES=150
 DISP_SPECTRUM_SIZE = 120
 
 my_plot(time, {f'{LOW_FREQUENCY} Hz + {HIGH_FREQUENCY} Hz':signal}, res=RES)
-plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
-plt.xlabel('t')
+plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
 plt.xticks(list(np.arange(0, 0.5, step=0.1)))
 plt.xlim(0, 0.5)
-
-freqs = np.linspace(0, 10e4/2, int(10e4/2))
-my_plot(freqs, {'':spectrum_abs}, stem=True, res=RES)
-plt.xlabel('f')
-plt.ylim(0,60000)
-plt.xlim(0, DISP_SPECTRUM_SIZE)
-plt.xticks(list(np.arange(0,DISP_SPECTRUM_SIZE, step=10)) + [LOW_FREQUENCY, FILTER_CUTOFF_FREQUENCY, HIGH_FREQUENCY])
-plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
-plt.axvline(x = FILTER_CUTOFF_FREQUENCY, color = 'r', label = 'filter cutoff frequency', linestyle = '--', linewidth = 1)
-plt.legend(loc = 'lower center', ncol=1 , bbox_to_anchor=(0.5, 1), framealpha=0)
 
 my_plot(time, {f'{LOW_FREQUENCY} Hz':filtered_signal}, styles = ['C1'], res=RES)
 plt.ylim(-2.2,2.2)
@@ -52,11 +41,28 @@ plt.xticks(list(np.arange(0, 0.5, step=0.1)))
 plt.xlim(0, 0.5)
 
 freqs = np.linspace(0, 10e4/2, int(10e4/2))
-my_plot(freqs, {'':spectrum_filt_abs}, styles = ['C1'], stem=True, res=RES)
-plt.xlabel('f')
-plt.ylim(0,60000)
+my_plot(freqs, {'':spectrum_abs}, stem=True, res=RES)
+plt.ylim(5000,60000)
 plt.xlim(0, DISP_SPECTRUM_SIZE)
-plt.xticks(list(np.arange(0,DISP_SPECTRUM_SIZE, step=10)) + [LOW_FREQUENCY, FILTER_CUTOFF_FREQUENCY])
-plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
+plt.xticks(list(np.arange(0,DISP_SPECTRUM_SIZE, step=10)) + [LOW_FREQUENCY, FILTER_CUTOFF_FREQUENCY, HIGH_FREQUENCY])
+plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
 plt.axvline(x = FILTER_CUTOFF_FREQUENCY, color = 'r', label = 'filter cutoff frequency', linestyle = '--', linewidth = 1)
 plt.legend(loc = 'lower center', ncol=1 , bbox_to_anchor=(0.5, 1), framealpha=0)
+
+fsamp = 10e2
+coef_b, coef_a = scipy.signal.butter(1, 2*FILTER_CUTOFF_FREQUENCY/fsamp, btype='lowpass')
+freqs, response = scipy.signal.freqz(coef_b, coef_a, fs=fsamp, include_nyquist=True)
+my_plot(freqs, {'Lowpass filter frequency response':response}, styles = ['C4'], res=RES)
+plt.xlim(0, DISP_SPECTRUM_SIZE)
+plt.xticks(list(np.arange(0,DISP_SPECTRUM_SIZE, step=10)) + [LOW_FREQUENCY, FILTER_CUTOFF_FREQUENCY, HIGH_FREQUENCY])
+plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
+plt.axvline(x = FILTER_CUTOFF_FREQUENCY, color = 'r', linestyle = '--', linewidth = 1)
+
+freqs = np.linspace(0, 10e4/2, int(10e4/2))
+my_plot(freqs, {'':spectrum_filt_abs}, styles = ['C1'], stem=True, res=RES)
+plt.xlabel('f')
+plt.ylim(5000,60000)
+plt.xlim(0, DISP_SPECTRUM_SIZE)
+plt.xticks(list(np.arange(0,DISP_SPECTRUM_SIZE, step=10)) + [LOW_FREQUENCY, FILTER_CUTOFF_FREQUENCY, HIGH_FREQUENCY])
+plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
+plt.axvline(x = FILTER_CUTOFF_FREQUENCY, color = 'r', linestyle = '--', linewidth = 1)

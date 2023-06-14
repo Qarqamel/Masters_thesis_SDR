@@ -46,7 +46,7 @@ freqs = np.linspace(0, NR_OF_SAMPLES/2, int(NR_OF_SAMPLES/2))
 
 my_plot(freqs, {'':spectrum_abs}, styles = ['C1'], stem=True, res = RES)
 plt.xlabel('f')
-plt.ylim(0,6000)
+plt.ylim(300,6000)
 plt.xlim(0, SIGNAL_FREQUENCY_2*3/2)
 plt.xticks(list(np.arange(0,SIGNAL_FREQUENCY_2*3/2, step=2))+[SIGNAL_FREQUENCY_1, SIGNAL_FREQUENCY_2])
 plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)

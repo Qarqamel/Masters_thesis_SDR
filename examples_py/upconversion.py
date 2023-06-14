@@ -28,18 +28,9 @@ my_plot(time, {f'carrier ({HIGH_FREQUENCY}Hz)':high_freq_carrier,
 plt.tick_params(left = True, labelleft = True, bottom = False, labelbottom = False)
 plt.xlim(0,1)
 
-my_plot(time, {'upconverted signal':upconverted_signal}, styles = ['C1'], res = RES)
-plt.tick_params(left = True, labelleft = True, bottom = True, labelbottom = True)
+my_plot(time, {f'upconverted signal        sin({LOW_FREQUENCY}t) * sin({HIGH_FREQUENCY}t) = sin({HIGH_FREQUENCY-LOW_FREQUENCY}t) + sin({HIGH_FREQUENCY+LOW_FREQUENCY}t)':upconverted_signal}, styles = ['C1'], res = RES)
+plt.tick_params(left = True, labelleft = True, bottom = False, labelbottom = False)
 plt.xlim(0,1)
-plt.xlabel('t')
-
-freqs = np.linspace(0, NR_OF_SAMPLES/2, int(NR_OF_SAMPLES/2))
-my_plot(freqs, {'':sig_spectrum_abs},  styles = ['C1'], stem = True, res = RES)
-plt.xlabel('f')
-plt.ylim(0,3000)
-plt.xlim(0,HIGH_FREQUENCY+LOW_FREQUENCY+HIGH_FREQUENCY/2)
-plt.xticks(list(np.arange(0, HIGH_FREQUENCY+LOW_FREQUENCY+HIGH_FREQUENCY/2, 2))+[HIGH_FREQUENCY-LOW_FREQUENCY,HIGH_FREQUENCY+LOW_FREQUENCY])
-plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
 
 my_plot(time, {f'{HIGH_FREQUENCY - LOW_FREQUENCY}Hz':comp_sine_1,
                f'{HIGH_FREQUENCY + LOW_FREQUENCY}Hz':comp_sine_2},
@@ -49,3 +40,25 @@ plt.xlim(0,1)
 plt.ylim(-1.1,1.1)
 plt.tick_params(left = True, labelleft = True, bottom = True, labelbottom = True)
 plt.xlabel('t')
+
+signals_spectrums = []
+for sig in [low_freq_signal, high_freq_carrier, 2*comp_sine_1, 2*comp_sine_2]:
+    spectrum = np.fft.fft(sig)
+    spectrum = spectrum[0:len(spectrum)//2]
+    spectrum_abs = np.absolute(spectrum)
+    signals_spectrums.append(spectrum_abs)
+
+freqs = np.linspace(0, NR_OF_SAMPLES/2, int(NR_OF_SAMPLES/2))
+my_plot(freqs, {'':sig_spectrum_abs*2,
+                ' ':signals_spectrums[0],
+                '  ':signals_spectrums[1],
+                '   ':signals_spectrums[2],
+                '    ':signals_spectrums[3]},
+        styles = ['C1', 'C0','C2', 'C4', 'C9'],
+        line_widths = [4, 1.5, 1.5, 1.5, 1.5],
+        stem = True, res = RES)
+plt.xlabel('f')
+plt.ylim(500,6000)
+plt.xlim(0,HIGH_FREQUENCY+LOW_FREQUENCY+HIGH_FREQUENCY/2)
+plt.xticks(list(np.arange(0, HIGH_FREQUENCY+LOW_FREQUENCY+HIGH_FREQUENCY/2, 2))+[HIGH_FREQUENCY, LOW_FREQUENCY, HIGH_FREQUENCY-LOW_FREQUENCY,HIGH_FREQUENCY+LOW_FREQUENCY])
+plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)

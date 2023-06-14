@@ -20,8 +20,10 @@ def my_plot(x_vect, plots_dict, line_widths = [], styles = [], leg_ncol = 1, ste
     ax.set_facecolor("#FAF4F6")
     plt.grid()
     if stem:
-        for name, style in zip(plots_dict, styles):
-            plt.stem(x_vect, plots_dict[name], linefmt = style, markerfmt = style + 'o', label=('' if name.isspace() else name), basefmt = ' ')
+        for name, style, width in zip(plots_dict, styles, line_widths):
+            markerline, stemline, baseline, = plt.stem(x_vect, plots_dict[name], linefmt = style, markerfmt = style + 'o', label=('' if name.isspace() else name), basefmt = ' ')
+            plt.setp(stemline, linewidth = width)
+            plt.setp(markerline, markersize = width+3)
     else:
         if isinstance(x_vect[0], Iterable):
             for x_axs, name, style, width in zip(x_vect, plots_dict, styles, line_widths):
