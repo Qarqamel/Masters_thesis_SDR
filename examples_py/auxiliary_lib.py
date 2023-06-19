@@ -28,11 +28,11 @@ def my_plot(x_vect, plots_dict, line_widths = [], styles = [], leg_ncol = 1, ste
         if isinstance(x_vect[0], Iterable):
             for x_axs, name, style, width in zip(x_vect, plots_dict, styles, line_widths):
                 plt.plot(x_axs, plots_dict[name], style, linewidth = width, label=('' if name.isspace() else name))
-                plt.xticks(list(np.arange(0, max(x_vect[0]), step=max(x_vect[0])/5)))
+                plt.xticks(list(np.arange(0, round(max(x_vect[0]),1), step=round(max(x_vect[0]),1)/5)))
         else:
             for name, style, width in zip(plots_dict, styles, line_widths):
                 plt.plot(x_vect, plots_dict[name], style, linewidth = width, label=name)
-                plt.xticks(list(np.arange(0, max(x_vect), step=max(x_vect)/5)))
+                plt.xticks(list(np.arange(0, round(max(x_vect),1), step=round(max(x_vect),1)/5)))
     if (len(plots_dict)>1):
         plt.legend(loc = 'lower center', ncol=leg_ncol , bbox_to_anchor=(0.5, 1), framealpha=0)
     else:
