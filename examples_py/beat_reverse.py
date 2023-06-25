@@ -40,7 +40,7 @@ my_plot(freqs, {'':spectrum_abs}, styles = ['C1'], stem=True, res = RES)
 plt.xlabel('f')
 plt.ylim(200,3000)
 plt.xlim(0, SIGNAL_FREQUENCY_2*3/2)
-plt.xticks(list(np.arange(0,SIGNAL_FREQUENCY_2*3/2, step=2))+[SIGNAL_FREQUENCY_2 - SIGNAL_FREQUENCY_1, SIGNAL_FREQUENCY_2 + SIGNAL_FREQUENCY_1])
+plt.xticks(list(np.arange(0,round(SIGNAL_FREQUENCY_2*3/2), step=2))+[SIGNAL_FREQUENCY_2 - SIGNAL_FREQUENCY_1, SIGNAL_FREQUENCY_2 + SIGNAL_FREQUENCY_1])
 plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
 
 my_plot(time, {f'{int(component_1_freq)} Hz':component_1,
