@@ -28,17 +28,17 @@ for freq, sign in zip(samp_freq_list, ['< fsamp/2', '= fsamp/2', '> fsamp/2', '=
 
     if freq == samp_freq_list[0]:
         my_plot([time_original, time],
-                {f'signal)':sinewave_original,
+                {'signal':sinewave_original,
                  f'samples (fs = {freq} Hz)':sinewave},
-                [3, 1.5],
-                ['-', '.'], leg_ncol=1, res = RES)
+                [1, 1.5],
+                ['C2--', '.'], leg_ncol=1, res = RES)
         plt.title('original samples', loc = 'left')
     else:
         my_plot([time_original, time],
                 {'':sinewave_original,
                  f'samples (fs = {freq} Hz)':sinewave},
-                [3, 1.5],
-                ['-', '.'], leg_ncol=2, res = RES)
+                [1, 1.5],
+                ['C2--', 'C1.'], leg_ncol=2, res = RES)
         plt.title(f'downsampled by a factor of {int(samp_freq_list[0]/freq)}', loc = 'left')
     plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
     plt.xlim(0,TIME_LIM)
