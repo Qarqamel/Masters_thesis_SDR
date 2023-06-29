@@ -10,6 +10,11 @@ plt.rc('ytick', labelsize=8)
 plt.rc('legend', fontsize=8)
 plt.rc('figure', titlesize=8)
 
+def calculate_fft(signal):
+    spectrum = np.fft.fft(signal)
+    spectrum = spectrum[0:len(spectrum)//2]
+    return np.absolute(spectrum)
+
 def my_plot(x_vect, plots_dict, line_widths = [], styles = [], leg_ncol = 1, stem = False, res = 150, fig_height = 1):
     if styles == []:
         styles = ['']*len(plots_dict)
@@ -20,10 +25,16 @@ def my_plot(x_vect, plots_dict, line_widths = [], styles = [], leg_ncol = 1, ste
     ax.set_facecolor("#FAF4F6")
     plt.grid()
     if stem:
-        for name, style, width in zip(plots_dict, styles, line_widths):
-            markerline, stemline, baseline, = plt.stem(x_vect, plots_dict[name], linefmt = style, markerfmt = style + 'o', label=('' if name.isspace() else name), basefmt = ' ')
-            plt.setp(stemline, linewidth = width)
-            plt.setp(markerline, markersize = width+3)
+        if isinstance(x_vect[0], Iterable):
+            for X_axs, name, style, width in zip(x_vect, plots_dict, styles, line_widths):
+                markerline, stemline, baseline, = plt.stem(X_axs, plots_dict[name], linefmt = style, markerfmt = style + 'o', label=('' if name.isspace() else name), basefmt = ' ')
+                plt.setp(stemline, linewidth = width)
+                plt.setp(markerline, markersize = width+3)
+        else:
+            for name, style, width in zip(plots_dict, styles, line_widths):
+                markerline, stemline, baseline, = plt.stem(x_vect, plots_dict[name], linefmt = style, markerfmt = style + 'o', label=('' if name.isspace() else name), basefmt = ' ')
+                plt.setp(stemline, linewidth = width)
+                plt.setp(markerline, markersize = width+3)
     else:
         if isinstance(x_vect[0], Iterable):
             for x_axs, name, style, width in zip(x_vect, plots_dict, styles, line_widths):
