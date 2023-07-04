@@ -2,6 +2,8 @@ from matplotlib import pyplot as plt
 from collections.abc import Iterable
 import numpy as np
 
+plt.rcdefaults()
+
 plt.rc('font', size=8)
 plt.rc('axes', titlesize=8)
 plt.rc('axes', labelsize=8)
