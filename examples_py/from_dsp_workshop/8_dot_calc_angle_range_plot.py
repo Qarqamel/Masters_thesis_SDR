@@ -1,6 +1,7 @@
 from mylib import rotate_vector
 import numpy as np
 import matplotlib.pyplot as plt
+from auxiliary_lib import my_plot
 
 v = [0, 1]
 
@@ -24,17 +25,21 @@ for angle in range(0, 360, 45):
 
 RES = 150
 
+# plt.rcParams.update({'axes.facecolor':'#FAF4F6'})
 plt.rcdefaults()
-plt.rcParams.update({'axes.facecolor':'#FAF4F6'})
+plt.rc('font', size=8)
+plt.rc('font', family='Arial')
 
 #my_plot(angle_list, {'dot':dot_list})
-plt.figure(figsize = [6.4, 3.2], dpi=RES, facecolor='#FAF4F6')
-plt.plot(angle_list,dot_list, '-')
-plt.plot(angle_short,dot_short, 'C0.', markersize=15)
+plt.figure(figsize = [6.4, 3.2], dpi=RES)
+plt.plot(angle_list,dot_list, '-', color = 'black')
+plt.plot(angle_short,dot_short, '.', color = 'black', markersize=15)
+plt.axhline(y=0,color='black', linewidth=0.8)
 plt.xticks(list(np.arange(0,370, step=45)))
+plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
 
-plt.xlabel('angle')
-plt.ylabel('dot product')
+plt.xlabel('kąt [°]')
+plt.ylabel('iloczyn skalarny')
 
-# plt.grid()
+plt.grid(axis='x')
 

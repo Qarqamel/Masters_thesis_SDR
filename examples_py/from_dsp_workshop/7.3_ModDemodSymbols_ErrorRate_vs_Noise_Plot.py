@@ -1,10 +1,25 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mapper_lib import symbol_to_ampl, ampl_to_symbol 
+from mapper_lib import symbol_to_ampl, ampl_to_symbol
+from auxiliary_lib import my_plot
 
 # PARAMETERS
 TIME_VECTOR_SIZE = 60
 TRANSMISIONS_NR = 1000
+
+plt.rcdefaults()
+plt.rc('font', size=8)
+plt.rc('axes', titlesize=8)
+plt.rc('axes', labelsize=8)
+plt.rc('xtick', labelsize=8)
+plt.rc('ytick', labelsize=8)
+plt.rc('legend', fontsize=8)
+plt.rc('figure', titlesize=8)
+plt.rc('font', family='Arial')
+
+RES = 100
+
+plt.figure(dpi=RES)
 
 for symbol_nr in 2,4,8:
     t = np.linspace(0, 2*np.pi,TIME_VECTOR_SIZE, endpoint=False)
@@ -37,6 +52,7 @@ for symbol_nr in 2,4,8:
     
     plt.plot(noise_deviation_list, err_nr_list, 'p-', label = f'symbol nr = {symbol_nr}')
 
+plt.axhline(y=300,color='red', label='max error rate')
 plt.xlabel('noise deviation')
 plt.ylabel('error nr')
 plt.grid()

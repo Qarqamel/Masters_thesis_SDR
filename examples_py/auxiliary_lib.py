@@ -2,22 +2,24 @@ from matplotlib import pyplot as plt
 from collections.abc import Iterable
 import numpy as np
 
-plt.rcdefaults()
-
-plt.rc('font', size=8)
-plt.rc('axes', titlesize=8)
-plt.rc('axes', labelsize=8)
-plt.rc('xtick', labelsize=8)
-plt.rc('ytick', labelsize=8)
-plt.rc('legend', fontsize=8)
-plt.rc('figure', titlesize=8)
-
 def calculate_fft(signal):
     spectrum = np.fft.fft(signal)
     spectrum = spectrum[0:len(spectrum)//2]
     return np.absolute(spectrum)
 
 def my_plot(x_vect, plots_dict, line_widths = [], styles = [], leg_ncol = 1, stem = False, res = 150, fig_height = 1):
+    
+    plt.rcdefaults()
+
+    plt.rc('font', size=8)
+    plt.rc('axes', titlesize=8)
+    plt.rc('axes', labelsize=8)
+    plt.rc('xtick', labelsize=8)
+    plt.rc('ytick', labelsize=8)
+    plt.rc('legend', fontsize=8)
+    plt.rc('figure', titlesize=8)
+    # plt.rc('font', family='Arial')
+    
     if styles == []:
         styles = ['']*len(plots_dict)
     if line_widths == []:

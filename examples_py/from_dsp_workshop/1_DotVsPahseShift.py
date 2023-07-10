@@ -1,8 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from mylib import rotate_vector
+from auxiliary_lib import my_plot
 
-RES = 100
+RES = 500
 PI = np.pi
 
 # PARAMETER
@@ -10,9 +11,16 @@ PHASE_SHIFT_LIST = np.linspace(0, 7/4*PI,8, endpoint=True)
 
 dot_list = []
 
+plt.rcdefaults()
+plt.rc('ytick', labelsize=8)
+plt.rc('legend', fontsize=8)
+plt.rc('font', size=8)
+plt.rc('font', family='Arial')
+# plt.rcParams.update({'axes.facecolor':'#FAF4F6'})
+
 for shift in PHASE_SHIFT_LIST:
     # VECTORS
-    t = np.linspace(0, 2*PI,30, endpoint=False)
+    t = np.linspace(0, 2*PI,1000, endpoint=False)
     
     Ref = np.sin(t)
     if shift == PHASE_SHIFT_LIST[0]:
@@ -24,32 +32,35 @@ for shift in PHASE_SHIFT_LIST:
     dot_list.append(dot_product)
     
     
-    plt.figure(figsize = [6.4, 3.2], dpi=RES, facecolor='#FAF4F6')
-    plt.plot(t, Ref, 'p-', color='C0', label='Ref')
-    plt.plot(t, Shifted, 'p-', color='C2', label='Shifted')
+    plt.figure(figsize = [1.6, 0.8], dpi=RES)
+    plt.plot(t, Ref, '-', color='C0', label='Ref')
+    plt.plot(t, Shifted, '-', color='C2', label='Shifted')
     plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
-    # if shift == PHASE_SHIFT_LIST[0] or shift == PHASE_SHIFT_LIST[4]:
-    #     plt.tick_params(left = True, labelleft = True, bottom = False, labelbottom = False)
-    # else:
-    #     plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
-    plt.axhline(y=0,color='black')
+    if shift == PHASE_SHIFT_LIST[0] or shift == PHASE_SHIFT_LIST[4]:
+        plt.tick_params(left = True, labelleft = True, bottom = False, labelbottom = False)
+        plt.yticks([-1, 0, 1])
+    else:
+        plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
+    plt.axhline(y=0,color='black', linewidth=0.8)
     plt.ylim(-1.1,1.1)
     if shift == PHASE_SHIFT_LIST[0] or shift == PHASE_SHIFT_LIST[4]:
-        plt.legend()
+        plt.legend(framealpha = 0.5)
     plt.show()
     
-    plt.figure(figsize = [6.4, 3.2], dpi=RES, facecolor='#FAF4F6')
-    plt.stem(t, Ref_mult_Shifted, linefmt = 'C1', markerfmt = 'C1o', basefmt = ' ', label='Ref_mult_Shifted')
+    plt.figure(figsize = [1.6, 0.8], dpi=RES)
+    # plt.plot(t, Ref_mult_Shifted, '-', color = 'C1', alpha = 0.1, label='Mult')
+    plt.fill_between(t, Ref_mult_Shifted, color = 'C1', step="pre", alpha=0.3, label='Mult')
     plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
-    # if shift == PHASE_SHIFT_LIST[0] or shift == PHASE_SHIFT_LIST[4]:
-    #     plt.tick_params(left = True, labelleft = True, bottom = False, labelbottom = False)
-    # else:
-    #     plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
-    plt.axhline(y=0,color='black')
-    plt.axhline(y=np.mean(Ref_mult_Shifted), color='C1', linestyle='--')
+    if shift == PHASE_SHIFT_LIST[0] or shift == PHASE_SHIFT_LIST[4]:
+        plt.tick_params(left = True, labelleft = True, bottom = False, labelbottom = False)
+        plt.yticks([-1, 0, 1])
+    else:
+        plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
+    plt.axhline(y=0,color='black', linewidth=0.8)
+    plt.axhline(y=np.mean(Ref_mult_Shifted), color='red', linestyle='-')
     plt.ylim(-1.1,1.1)
     if shift == PHASE_SHIFT_LIST[0] or shift == PHASE_SHIFT_LIST[4]:
-        plt.legend()
+        plt.legend(framealpha = 0.5)
     plt.show()
     # print phase shift and dot product value
     print(f'phase_shift = {shift : 0.2f}')
@@ -75,17 +86,17 @@ for angle in range(0, 360, 45):
     dot = np.dot(v, v_rot)
     dot_short.append(dot)
 
-plt.rcdefaults()
-plt.rcParams.update({'axes.facecolor':'#FAF4F6'})
-
+plt.rc('ytick', labelsize=8)
 #my_plot(angle_list, {'dot':dot_list})
-plt.figure(figsize = [6.4, 2.5], dpi=RES, facecolor='#FAF4F6')
-plt.plot(angle_list,dot_list, 'C1-')
-plt.plot(angle_short,dot_short, 'C1.', markersize=15)
+plt.figure(figsize = [6.4, 2.5], dpi=RES)
+plt.axhline(y=0,color='black', linewidth=0.8)
+plt.plot(angle_list,dot_list, '-', color = 'black')
+plt.plot(angle_short,dot_short, '.', color = 'red', markersize=15)
 plt.xticks(list(np.arange(0,370, step=45)))
+plt.tick_params(left = False, labelleft = False, bottom = True, labelbottom = True)
 
-plt.xlabel('shift')
-plt.ylabel('dot product')
+plt.xlabel('przesunięcie fazowe [°]')
+plt.ylabel('iloczyn skalarny')
 
-# plt.grid()
+plt.grid(axis='x')
 plt.show()
