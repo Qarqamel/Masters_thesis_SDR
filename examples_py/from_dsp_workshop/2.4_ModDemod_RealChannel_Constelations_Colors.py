@@ -50,7 +50,7 @@ for nd in NOISE_DEVIATION:
     
     # PRESENTATION  
     # Rx plot
-    plt.figure(figsize = [2.5, 2.5], dpi=RES)
+    plt.figure(figsize = [2, 2], dpi=RES)
     for j in range(40):
         plt.scatter(amplitudes_cos[j], amplitudes_sin[j], color=('red','orange','green','blue')[j%4])
     plt.ylabel('sin_ampl.')
@@ -60,6 +60,7 @@ for nd in NOISE_DEVIATION:
     plt.grid()
     plt.ylim(-4,4)
     plt.xlim(-4,4)
+    plt.yticks(range(-4,5))
     plt.xticks(range(-4,5))
     plt.title(f'dev = {nd}')
 

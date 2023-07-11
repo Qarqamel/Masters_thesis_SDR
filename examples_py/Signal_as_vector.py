@@ -2,15 +2,26 @@ import numpy as np
 import matplotlib.pyplot as plt
 from auxiliary_lib import my_plot
 import string
+import scipy.interpolate
 
-def arb_function(x):
-    return -1/3*np.sin(x) - 1/4*np.sin(2*x)
+A_vector = [0.088,0.088,0.088,0.442,0.530,0.000,-0.530,-0.442,-0.088,-0.088,-0.088]
+B_vector_list = [
+     [0.080,0.080,0.080,0.398,0.477,0.000,-0.477,-0.398,-0.080,-0.080,-0.080],
+     [0.129,0.129,0.129,0.514,0.643,0.000,0.129,0.129,0.129,0.129,0.129],
+     [-0.129,-0.129,-0.129,-0.514,-0.643,-0.000,-0.129,-0.129,-0.129,-0.129,-0.129],
+     [-0.080,-0.080,-0.080,-0.398,-0.477,-0.000,0.477,0.398,0.080,0.080,0.080],
+     [0.000, 0.050, 0.000, -0.050, 0.000, 0.050, 0.000, -0.050, 0.000, 0.050, 0.000],
+     [0.500, 0.550, 0.500, 0.450, 0.500, 0.550, 0.500, 0.450, 0.500, 0.550, 0.500],
+     [0.500, 0.650, 0.500, 0.350, 0.500, 0.650, 0.500, 0.350, 0.500, 0.650, 0.500],
+     [-0.500, -0.350, -0.500, -0.650, -0.500, -0.350, -0.500, -0.650, -0.500, -0.350, -0.500]
+    ]
 
-angles = np.linspace(-4, 4, 1001)
-arb_func = [arb_function(ang) for ang in angles]
+t = np.linspace(0,10, 11)
+t_inter = np.linspace(0,10,1000)
 
-angles_samp = angles[0::100]
-arb_func_samp = arb_func[0::100]
+A_vector_inter_func = scipy.interpolate.interp1d(t, A_vector, kind='cubic')
+A_vector_inter = A_vector_inter_func(t_inter)
+
 
 RES = 100
 
@@ -25,10 +36,10 @@ plt.rc('legend', fontsize=8)
 plt.rc('figure', titlesize=8)
 plt.rc('font', family='Arial')
 
-plt.figure(figsize = [6.4, 3.2], dpi=RES)
-plt.plot(angles, arb_func, 'C0-')
-plt.plot(angles_samp, arb_func_samp, 'C0o')
+plt.figure(figsize = [4.8, 2.07], dpi=RES)
 plt.axhline(y=0,color='black', linewidth=0.8)
-plt.xticks(ticks = angles_samp, labels=list(string.ascii_uppercase)[:11], color='red', weight='bold')
-plt.xlabel('Współrzędne wektora')
-plt.grid()
+plt.plot(t_inter, A_vector_inter, 'C0-', alpha = 0.3)
+plt.plot(t, A_vector, 'C0o')
+plt.xticks(ticks = range(11), labels=list(string.ascii_uppercase)[:11], color='red', weight='bold')
+plt.xlabel('Współrzędne wektora, wartości sygnału')
+plt.grid(axis='x')
