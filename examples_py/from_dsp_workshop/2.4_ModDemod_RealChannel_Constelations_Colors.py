@@ -51,13 +51,13 @@ for nd in NOISE_DEVIATION:
     # PRESENTATION  
     # Rx plot
     plt.figure(figsize = [2, 2], dpi=RES)
+    plt.grid(alpha=0.3)
     for j in range(40):
-        plt.scatter(amplitudes_cos[j], amplitudes_sin[j], color=('red','orange','green','blue')[j%4])
+        plt.scatter(amplitudes_cos[j], amplitudes_sin[j], color=('red','orange','green','blue')[j%4], marker='.')
     plt.ylabel('sin_ampl.')
     plt.xlabel('cos_ampl.')
-    plt.axhline(y=0,color='black')
-    plt.axvline(x=0,color='black')
-    plt.grid()
+    plt.axhline(y=0,color='black', linewidth=0.8)
+    plt.axvline(x=0,color='black', linewidth=0.8)
     plt.ylim(-4,4)
     plt.xlim(-4,4)
     plt.yticks(range(-4,5))

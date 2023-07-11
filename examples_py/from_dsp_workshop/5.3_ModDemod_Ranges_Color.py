@@ -57,9 +57,10 @@ for nd, iter in zip(NOISE_DEVIATION, range(3)):
     # Rx plot
     for i in range(AMPL_NR):
         plt.plot(ampl_list[i::AMPL_NR], 'p')
-    plt.axhline(y=0,color='black')
-    plt.grid(axis='y')
-    plt.title(f'NOISE_DEVIATION = {nd}')
+        plt.axhline(y=4/AMPL_NR*(i+1)+nd/2, linestyle='--', linewidth = 0.7, color='black')
+    plt.axhline(y=0, linewidth = 0.7, color='black')
+    # plt.grid(axis='y')
+    plt.title(f'SYMBOL NR = {AMPL_NR}')
     if iter == 0:
         plt.tick_params(left = True, labelleft = True, bottom = False, labelbottom = False)
     else:

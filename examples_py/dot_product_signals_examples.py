@@ -56,8 +56,18 @@ for b_vect, i in zip(B_vector_list, range(len(B_vector_list))):
     plt.axhline(y=0,color='black', linewidth=0.8)
     markerline, stemline, baseline, = plt.stem(t, dot_product, linefmt = 'C1', markerfmt='.', basefmt = ' ')
     plt.setp(markerline, color = 'C1')
-    plt.plot([0],[0], alpha = 0, label ="{:.3f}".format(sum(dot_product)))
-    plt.legend(loc = 'upper right', ncol=2 , bbox_to_anchor=(1.07, 1.1), framealpha=0, labelcolor='red')
+    plt.plot([0],[0], alpha = 0)
+    plt.legend(loc = 'upper right',
+               bbox_to_anchor=(1, 1),
+               framealpha=0.5,
+               labelcolor = 'red',
+               facecolor = 'red',
+               edgecolor = 'red',
+               borderpad = 0.4,
+               labelspacing=0,
+               borderaxespad = 0,
+               columnspacing = 0,
+               title="{:.3f}".format(sum(dot_product)))
     plt.xticks(ticks = t, labels=range(0,11))
     plt.yticks(np.linspace(-0.1, 0.4, 6))
     plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)

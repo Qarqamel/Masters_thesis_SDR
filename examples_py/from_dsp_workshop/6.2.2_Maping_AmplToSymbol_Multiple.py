@@ -16,7 +16,7 @@ plt.rc('font', family='Arial')
 RES = 100
 
 # PRESENTATION  
-plt.figure(dpi=RES)
+plt.figure(figsize = [6.4, 2.4], dpi=RES)
 
 for symbol_nr in 2,4,8:
     amplitudes_l = np.linspace(-1.5, 1.5, 100)

@@ -19,7 +19,7 @@ plt.rc('font', family='Arial')
 
 RES = 100
 
-plt.figure(dpi=RES)
+plt.figure(figsize = [6.4, 2.4], dpi=RES)
 
 for symbol_nr in 2,4,8:
     t = np.linspace(0, 2*np.pi,TIME_VECTOR_SIZE, endpoint=False)

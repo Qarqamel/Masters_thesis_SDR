@@ -39,7 +39,7 @@ for i, clr in zip(range(3), ['C0', 'C2', 'C6']): # "3' - nr of componenets
     plt.plot(t,y_triangle,'-', color = clr)
     y_triangle_sum += y_triangle
 
-plt.title('Triangle')
+# plt.title('Triangle')
 plt.ylabel('Componenets')
 # plt.ylim(-1,1)
 plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
@@ -68,7 +68,7 @@ for i, clr in zip(range(3), ['C0', 'C2', 'C6']): # "3' - nr of componenets
     plt.plot(t,y_square,'-', color = clr)
     y_square_sum += y_square
 
-plt.title('Rectangle')
+# plt.title('Rectangle')
 # plt.ylim(-1,1)
 plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
 plt.show()
@@ -95,7 +95,7 @@ for i, clr in zip(range(3), ['C0', 'C2', 'C6']): # "3' - nr of componenets
     plt.plot(t,y_sine,'-', color = clr)
     y_sine_sum += y_sine
 
-plt.title('Sine')
+# plt.title('Sine')
 # plt.ylim(-1,1)
 plt.tick_params(left = False, labelleft = False, bottom = False, labelbottom = False)
 plt.show()
